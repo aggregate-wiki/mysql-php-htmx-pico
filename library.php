@@ -38,27 +38,31 @@ function text_encode($text, $length = 0)
 
 function database_handle()
 {
-    return pg_connect(getenv('DATABASE_URL'));
+    static $handle = null;
+    if (is_null($handle)) {
+        $handle = mysqli_connect(getenv('DB_HOST'), getenv('DB_USER'), getenv('DB_PASS'), getenv('DB_NAME'), getenv('DB_PORT'), getenv('DB_SOCK'));
+    }
+    return $handle;
 }
 
 function database_query($query)
 {
-    return pg_query(database_handle(), $query);
+    return mysqli_query(database_handle(), $query);
 }
 
 function database_scalar($query)
 {
-    return pg_fetch_array(database_query($query))[0];
+    return mysqli_fetch_row(database_query($query))[0];
 }
 
 function database_row($query)
 {
-    return pg_fetch_assoc(database_query($query));
+    return mysqli_fetch_assoc(database_query($query));
 }
 
 function database_table($query)
 {
-    return pg_fetch_all(database_query($query));
+    return mysqli_fetch_all(database_query($query), MYSQLI_ASSOC);
 }
 
 function html_template($view, $data = [], $template = 'base')

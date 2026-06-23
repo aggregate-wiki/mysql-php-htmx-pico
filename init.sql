@@ -1,4 +1,4 @@
 create table users (
-    id serial primary key,
+    id int auto_increment primary key,
     name text
 );

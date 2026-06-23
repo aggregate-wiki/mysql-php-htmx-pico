@@ -7,13 +7,13 @@ services:
       - "8080:8080"
     env_file: .env
   db:
-    image: postgres
+    image: mariadb
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "5432:5432"
+      - "3306:3306"
     environment:
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=app
-    command: ["postgres", "-c", "log_statement=all"]
+      - MARIADB_ALLOW_EMPTY_ROOT_PASSWORD=1
+      - MARIADB_USER=user
+      - MARIADB_PASSWORD=password
+      - MARIADB_DATABASE=app
