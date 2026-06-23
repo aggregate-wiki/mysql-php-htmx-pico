@@ -45,24 +45,24 @@ function database_handle()
     return $handle;
 }
 
-function database_query($query)
+function database_query($query, $params = null)
 {
-    return mysqli_query(database_handle(), $query);
+    return mysqli_execute_query(database_handle(), $query, $params);
 }
 
-function database_scalar($query)
+function database_scalar($query, $params = null)
 {
-    return mysqli_fetch_row(database_query($query))[0];
+    return mysqli_fetch_row(database_query($query, $params))[0];
 }
 
-function database_row($query)
+function database_row($query, $params = null)
 {
-    return mysqli_fetch_assoc(database_query($query));
+    return mysqli_fetch_assoc(database_query($query, $params));
 }
 
-function database_table($query)
+function database_table($query, $params = null)
 {
-    return mysqli_fetch_all(database_query($query), MYSQLI_ASSOC);
+    return mysqli_fetch_all(database_query($query, $params), MYSQLI_ASSOC);
 }
 
 function html_template($view, $data = [], $template = 'base')

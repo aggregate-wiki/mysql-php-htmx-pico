@@ -7,5 +7,5 @@ function get_users()
 
 function add_user($name)
 {
-    return database_query("insert into users (name) values ('$name')");
+    return database_query('insert into users (name) values (?)', [$name]);
 }
