@@ -1,0 +1,19 @@
+services:
+  app:
+    build: .
+    volumes:
+      - ./:/var/www/html
+    ports:
+      - "8080:8080"
+    env_file: .env
+  db:
+    image: postgres
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=app
+    command: ["postgres", "-c", "log_statement=all"]
